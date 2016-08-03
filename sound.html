@@ -41,6 +41,9 @@
     var sound = 0;
     var suggestionLabel = $("#suggestion");
     var lbl = '';
+    var date;
+    var soundArr = [];
+    var soundAndDateArr = [];
 
     $(document).ready(function() {
         currentSoundLabel.text(sound);
@@ -68,19 +71,34 @@ function checkInput(input) {
 
 function recieveSound(info) {
   sound = info;
+  date = new Date();
+  var gyroTime = date.toLocaleTimeString() + ' ' + date.toDateString();
+  soundArr[0] = info;
+  soundArr[1] = gyroTime;
+  soundAndDateArr.push(soundArr);
   currentSoundLabel.text(sound + '') ;
   giveSuggestion();
 }
 
 function giveSuggestion() {
-    if (sound >= 30 && sound < 55) {
+    var averageSound = findAverage();
+    console.log(averageSound);
+    if (averageSound >= 30 && averageSound < 55) {
         suggestionLabel.text('good') ;
-    } else if (sound < 50) {
+    } else if (averageSound < 50) {
         suggestionLabel.text('Low') ;
     } else {
         suggestionLabel.text('High') ;
     }
 }
+
+  function findAverage() {
+    var sum = 0;
+    for(var i = 0; i < soundAndDateArr.length; i++) {
+      sum += parseInt(soundAndDateArr[0][0]);
+    }
+    return sum / soundAndDateArr.length;
+  }
   </script
   </body>
 </html>
