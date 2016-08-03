@@ -23,17 +23,28 @@
           obj.wmode = "transparent";
           showClock(obj);
         </script> <br />
-        <label id="date">PLaceHolder date</label>
+        <label id="date"></label>
       </div>
       <div id="page-linked-container">
-        <label>1</label>
-        <label>2</label>
-        <label>3</label>
+        <label onclick="location.href='page2.html';">1</label>
+        <label onclick="location.href='page3.html';">2</label>
+        <label onclick="location.href='page4.html';">3</label>
+      </div>
+      <div id="timeSet">
+        <input value="0" />
+        <input value="0" />
+        <input value="0" />
+        <button>Submit</button>
       </div>
       <div id="end-part">
         <img src="images/logo.png" />
       </div>
     </div>
+    <script type="text/javascript">
+    $(document).ready(function(){
+        $("#date").text(new Date().toDateString());
+    });
+    </script>
 
 
 
