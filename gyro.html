@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <title>This is sound page</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+  </head>
+  <body>
+  <script type="text/javascript">
+  var currentMessage = '';
+  setInterval(function() {
+    $.ajax({
+      url: 'http://10.32.176.4/HP'
+    })
+    .done(function(data) {
+      if (data !== currentMessage) {
+        console.log(data)
+        checkInput(data);
+       currentMessage = data;
+      }
+    })
+  }, 1000);
+
+function checkInput(input) {
+  var inputArr = input.split(",");
+  if (inputArr[0] == 6)
+    recieveGyro(inputArr[1]);
+}
+
+function recieveGyro(gyroData) {
+  var axisArr = gyroData.split(" ");
+  var x = axisArr[0];
+  var y = axisArr[1];
+  var z = axisArr[3];
+  //analyse and suggest
+}
+  </script
+  </body>
+</html>

@@ -144,6 +144,33 @@ console.log("Click");
               }
           });
       }
+
+      var currentMessage = '';
+      setInterval(function() {
+        $.ajax({
+          url: 'http://10.32.176.4/HP'
+        })
+        .done(function(data) {
+          if (data !== currentMessage) {
+            checkInput(data);
+            console.log('success');
+           currentMessage = data;
+          }
+        })
+      }, 1000);
+
+    function checkInput(input) {
+      var inputArr = input.split(",");
+      if (inputArr[0] == 1)
+        recieveTime(inputArr[1]);
+    }
+
+    function recieveTime(timeInSecond) {
+      var date = new Date(null);
+      date.setSeconds(timeInSecond);
+      var sleepTime = date.toISOString().substr(11, 8);
+      alert(sleepTime);
+    }
     </script>
   </body>
 </html>
