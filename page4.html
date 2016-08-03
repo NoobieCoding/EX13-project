@@ -28,11 +28,14 @@
     function checkInput(input) {
       var inputArr = input.split(",");
       if (inputArr[0] == 1)
-        recieveTime(111111);
+        recieveTime(inputArr[1]);
     }
 
-    function recieveTime(timeInMinute) {
-      alert(timeInMinute);
+    function recieveTime(timeInSecond) {
+      var date = new Date(null);
+      date.setSeconds(timeInSecond);
+      var sleepTime = date.toISOString().substr(11, 8);
+      alert(sleepTime);
     }
     </script>
   </body>
