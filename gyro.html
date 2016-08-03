@@ -2,11 +2,40 @@
 
 <html lang="en">
   <head>
-    <title>This is sound page</title>
+    <title>This is gyropage</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
   </head>
   <body>
+    <textarea id="test"></textarea>
+    <br />
+    <label id="text">This is Huminity Page</label>
+    <br />
+    <br />
+
+    <div class="panel panel-success">
+        <div class="panel-heading">Your current Humidity</div>
+        <div class="panel-body">
+            <br />
+            <label id="currentHuminity"> </label>
+            <br />
+            <br />
+        </div>
+    </div>
+
+
+    <div class="panel panel-info">
+        <div class="panel-heading">What is Humidity?</div>
+        <div class="panel-body">
+        </div>
+    </div>
+
+    <div class="panel panel-warning">
+        <div class="panel-heading">Suggestion</div>
+        <div class="panel-body">
+            <label id="suggestion"> </label>
+        </div>
+    </div>
   <script type="text/javascript">
   var currentMessage = '';
   setInterval(function() {
@@ -33,7 +62,7 @@ function recieveGyro(gyroData) {
   var x = axisArr[0];
   var y = axisArr[1];
   var z = axisArr[3];
-  //analyse and suggest
+  alert(x);
 }
   </script
   </body>

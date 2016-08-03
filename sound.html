@@ -7,8 +7,46 @@
     <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
   </head>
   <body>
+    <br />
+    <label id="text">This is Sound Page</label>
+    <br />
+    <br />
+    <div class="panel panel-success">
+        <div class="panel-heading">Your current Sound</div>
+        <div class="panel-body">
+            <br />
+            <label id="currentSound"> </label>
+            <br />
+            <br />
+        </div>
+    </div>
+
+
+    <div class="panel panel-info">
+        <div class="panel-heading">What is Sound?</div>
+        <div class="panel-body">
+          xxxxxxxxxx
+        </div>
+    </div>
+
+    <div class="panel panel-warning">
+        <div class="panel-heading">Suggestion</div>
+        <div class="panel-body">
+            <label id="suggestion"> </label>
+        </div>
+    </div>
   <script type="text/javascript">
-  var currentMessage = '';
+    var currentMessage = '';
+    var currentSoundLabel = $("#currentSound");
+    var sound = 0;
+    var suggestionLabel = $("#suggestion");
+    var lbl = '';
+
+    $(document).ready(function() {
+        currentSoundLabel.text(sound);
+    });
+
+
   setInterval(function() {
     $.ajax({
       url: 'http://10.32.176.4/HP'
@@ -28,8 +66,20 @@ function checkInput(input) {
     recieveSound(inputArr[1]);
 }
 
-function recieveSound(sound) {
-  //display and analyse
+function recieveSound(info) {
+  sound = info;
+  currentSoundLabel.text(sound + '') ;
+  giveSuggestion();
+}
+
+function giveSuggestion() {
+    if (sound >= 30 && sound < 55) {
+        suggestionLabel.text('good') ;
+    } else if (sound < 50) {
+        suggestionLabel.text('Low') ;
+    } else {
+        suggestionLabel.text('High') ;
+    }
 }
   </script
   </body>
