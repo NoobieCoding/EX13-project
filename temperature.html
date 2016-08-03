@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <title>PLACE HOLDER2</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+</head>
+
+<body>
+    <textarea id="test"></textarea>
+    <br />
+    <label id="text">This is Temperature Page</label>
+    <br />
+    <br />
+
+    <div class="panel panel-success">
+        <div class="panel-heading">Your current Temperature</div>
+        <div class="panel-body">
+            <br />
+            <p>
+            <label id="currentHuminity"> </label>
+              </p>
+            <br />
+            <br />
+        </div>
+    </div>
+
+
+    <div class="panel panel-info">
+        <div class="panel-heading">What is Temperature?</div>
+        <div class="panel-body">
+            <p>
+                To explain what is temp.
+            </p>
+        </div>
+    </div>
+
+    <div class="panel panel-warning">
+        <div class="panel-heading">Suggestion</div>
+        <div class="panel-body">
+            <label id="suggestion"> </label>
+        </div>
+    </div>
+
+    <div class="panel panel-danger">
+          <div class="panel-heading">History of info</div>
+          <div class="panel-body">
+            <p>
+              This is where you paste your data.
+            </p>
+          </div>
+      </div>
+
+
+    <script type="text/javascript">
+        var currentMessage;
+        var currentTempLabel = $("#currentHuminity");
+        var temperature = 0;
+        var suggestionLabel = $("#suggestion");
+        var lbl = '';
+        var date;
+        var tempAndDateArr = [];
+
+        $(document).ready(function() {
+            currentTempLabel.text(temperature);
+        });
+
+        setInterval(function() {
+            $.ajax({
+                url: 'http://10.32.176.4/HP'
+            }).done(function(info) {
+                if (info !== currentMessage) {
+                    checkInput(info);
+                    var oldChat = $('#test').val();
+                    var newChat = (oldChat + '\n' + info);
+                    $("#test").html(newChat);
+                    currentMessage = info;
+
+                }
+            })
+        }, 1000);
+
+        function checkInput(input) {
+            var inputArr = input.split(",");
+            if (inputArr[0] == '2') {
+                recievetemperature(inputArr[1]);
+            }
+        }
+
+        function recievetemperature(info) {
+            temperature = info;
+            date = new Date();
+            var tempTime = date.toLocaleTimeString() + ' ' + date.toDateString();
+            tempAndDateArr.push([temperature, tempTime]);
+            currentTempLabel.text(temperature + '');
+            giveSuggestion();
+        }
+
+        function giveSuggestion() {
+            var averagetemp = findAverage();
+            console.log(averageTemp);
+            if (temperature >= 30 && temperature < 55) {
+                suggestionLabel.text('good');
+            } else if (temperature < 50) {
+                suggestionLabel.text('low');
+            } else {
+                suggestionLabel.text('High');
+            }
+        }
+
+        function findAverage() {
+          var sum = 0;
+          for(var i = 0; i < tempAndDateArr.length; i++) {
+            sum += parseInt(tempAndDateArr[0][0]);
+          }
+          return sum / tempAndDateArr.length;
+        }
+    </script>
+</body>
+
+</html>

@@ -42,7 +42,6 @@
     var suggestionLabel = $("#suggestion");
     var lbl = '';
     var date;
-    var soundArr = [];
     var soundAndDateArr = [];
 
     $(document).ready(function() {
@@ -72,10 +71,8 @@ function checkInput(input) {
 function recieveSound(info) {
   sound = info;
   date = new Date();
-  var gyroTime = date.toLocaleTimeString() + ' ' + date.toDateString();
-  soundArr[0] = info;
-  soundArr[1] = gyroTime;
-  soundAndDateArr.push(soundArr);
+  var soundTime = date.toLocaleTimeString() + ' ' + date.toDateString();
+  soundAndDateArr.push([sound, soundTime]);
   currentSoundLabel.text(sound + '') ;
   giveSuggestion();
 }

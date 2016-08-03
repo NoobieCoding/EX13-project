@@ -41,6 +41,7 @@
   var currentGyroLabel = $("#currentGyro");
   var suggestionLabel = $("#suggestion");
   var lbl = '';
+  var gyroAndDateArr = [];
 
   setInterval(function() {
     $.ajax({
@@ -67,12 +68,38 @@
     var x = axisArr[0];
     var y = axisArr[1];
     var z = axisArr[2];
+    var gyroTime = date.toLocaleTimeString() + ' ' + date.toDateString();
+    gyroAndDateArr.push([x, y, z, gyroTime]);
     currentGyroLabel.text('x: ' + x + '\n y: ' + y + '\n z: ' + z) ;
     giveSuggestion(x, y, z);
   }
 
   function giveSuggestion(x, y, z) {
+      var averageGyro = findAverage();
       suggestionLabel.text('หัวกลิ้งหมุนๆ') ;
+  }
+
+  function findAverage() {
+    var sumX = 0;
+    var sumY = 0;
+    var sumZ = 0;
+
+    for(var i = 0; i < gyroAndDateArr.length; i++) {
+      sumX += parseInt(gyroAndDateArr[0][0]);
+    }
+    var avrX = sumX / gyroAndDateArr.length;
+
+    for(var i = 0; i < gyroAndDateArr.length; i++) {
+      sumY += parseInt(gyroAndDateArr[0][1]);
+    }
+    var avrY = sumY / gyroAndDateArr.length;
+
+    for(var i = 0; i < gyroAndDateArr.length; i++) {
+      sumZ += parseInt(gyroAndDateArr[0][2]);
+    }
+    var avrZ = sumZ / gyroAndDateArr.length;
+
+    return [avrX, avrY, avrZ];
   }
   </script
   </body>

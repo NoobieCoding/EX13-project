@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <title>PLACE HOLDER2</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+</head>
+
+<body>
+    <textarea id="test"></textarea>
+    <br />
+    <label id="text">This is Pressure Page</label>
+    <br />
+    <br />
+
+    <div class="panel panel-success">
+        <div class="panel-heading">Your current Prssure</div>
+        <div class="panel-body">
+            <br />
+            <label id="currentPressure"> </label>
+            <br />
+            <br />
+        </div>
+    </div>
+
+
+    <div class="panel panel-info">
+        <div class="panel-heading">What is Pressure?</div>
+        <div class="panel-body">
+          <p>
+          This is to explain what is Pressure.
+          </p>
+        </div>
+    </div>
+
+    <div class="panel panel-warning">
+        <div class="panel-heading">Suggestion</div>
+        <div class="panel-body">
+            <label id="suggestion"> </label>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        var currentMessage;
+        var currentPressureLabel = $("#currentPressure");
+        var pressure = 0;
+        var suggestionLabel = $("#suggestion");
+        var lbl = '';
+        var date;
+        var pressureAndDateArr = [];
+
+        $(document).ready(function() {
+            currentPressureLabel.text(pressure);
+        });
+
+        setInterval(function() {
+            $.ajax({
+                url: 'http://10.32.176.4/HP'
+            }).done(function(info) {
+                if (info !== currentMessage) {
+                    checkInput(info);
+                    var oldChat = $('#test').val();
+                    var newChat = (oldChat + '\n' + info);
+                    $("#test").html(newChat);
+                    currentMessage = info;
+
+                }
+            })
+        }, 1000);
+
+        function checkInput(input) {
+            var inputArr = input.split(",");
+            if (inputArr[0] == '4') {
+                recievepressure(inputArr[1]);
+            }
+        }
+
+        function recievepressure(info) {
+            pressure = info;
+            date = new Date();
+            var pressureTime = date.toLocaleTimeString() + ' ' + date.toDateString();
+            pressureAndDateArr.push([pressure, pressureTime]);
+            currentPressureLabel.text(pressure + '');
+            giveSuggestion();
+        }
+
+        function giveSuggestion() {
+            var averagePressure = findAverage();
+            console.log(averagePressure);
+            if (pressure >= 30 && pressure < 55) {
+                suggestionLabel.text('good');
+            } else if (pressure < 50) {
+                suggestionLabel.text('Low');
+            } else {
+                suggestionLabel.text('High');
+            }
+        }
+
+        function findAverage() {
+          var sum = 0;
+          for(var i = 0; i < pressureAndDateArr.length; i++) {
+            sum += parseInt(pressureAndDateArr[0][0]);
+          }
+          return sum / pressureAndDateArr.length;
+        }
+    </script>
+</body>
+
+</html>

@@ -7,9 +7,12 @@
     <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
   </head>
   <body>
-    <textarea disable id="debug"></textarea>
+    <textarea disable id="debug"></textarea> <br /> <br />
+    <label id="temp">You have slept for 0 hour<label>
     <script type="text/javascript">
       var currentMessage = '';
+      var tempLabel = $("#temp");
+
       setInterval(function() {
         $.ajax({
           url: 'http://10.32.176.4/HP'
@@ -35,7 +38,7 @@
       var date = new Date(null);
       date.setSeconds(timeInSecond);
       var sleepTime = date.toISOString().substr(11, 8);
-      alert(sleepTime);
+      tempLabel.text("You have slept for " + sleeptime + "hour");
     }
     </script>
   </body>

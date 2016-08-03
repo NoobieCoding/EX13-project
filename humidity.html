@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <title>PLACE HOLDER2</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+</head>
+
+<body>
+    <textarea id="test"></textarea>
+    <br />
+    <label id="text">This is Huminity Page</label>
+    <br />
+    <br />
+
+    <div class="panel panel-success">
+        <div class="panel-heading">Your current Humidity</div>
+        <div class="panel-body">
+            <br />
+            <label id="currentHuminity"> </label>
+            <br />
+            <br />
+        </div>
+    </div>
+
+
+    <div class="panel panel-info">
+        <div class="panel-heading">What is Humidity?</div>
+        <div class="panel-body">
+            Humidity is the amount of water vapor in the air. Water vapor is the gaseous state of water and is invisible. Humidity indicates the likelihood of precipitation, dew, or fog.
+        </div>
+    </div>
+
+    <div class="panel panel-warning">
+        <div class="panel-heading">Suggestion</div>
+        <div class="panel-body">
+            <label id="suggestion"> </label>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        var currentMessage;
+        var currentHumidityLabel = $("#currentHuminity");
+        var humidity = 0;
+        var suggestionLabel = $("#suggestion");
+        var lbl = '';
+        var date;
+        var humidityArr = [];
+        var humidityAndDateArr = [];
+
+        $(document).ready(function() {
+            currentHumidityLabel.text(humidity);
+        });
+
+        setInterval(function() {
+            $.ajax({
+                  url: 'http://10.32.176.4/HP'
+            }).done(function(info) {
+                if (info !== currentMessage) {
+                    checkInput(info);
+                    var oldChat = $('#test').val();
+                    var newChat = (oldChat + '\n' + info);
+                    $("#test").html(newChat);
+                    currentMessage = info;
+
+                }
+            })
+        }, 1000);
+
+
+        function checkInput(input) {
+            var inputArr = input.split(",");
+            if (inputArr[0] == '2') {
+                recieveHumidity(inputArr[1]) ;
+        }
+      }
+
+
+        function recieveHumidity(info) {
+            date = new Date();
+            humidity = info;
+            var humidityTime = date.toLocaleTimeString() + ' ' + date.toDateString();
+            humidityAndDateArr.push([humidity, humidityTime]);
+            currentHumidityLabel.text(humidity + '') ;
+            currentHumidityLabel.text(humidity + '') ;
+            giveSuggestion() ;
+        }
+
+        function giveSuggestion() {
+          var averageHumidity = findAverage();
+        //  console.log(averageHumidity);
+          if (humidity >= 30 && humidity < 55) {
+            suggestionLabel.text('good') ;
+          } else if (humidity < 50) {
+            suggestionLabel.text('Low') ;
+          } else {
+            suggestionLabel.text('High') ;
+          }
+        }
+        function findAverage() {
+          var sum = 0;
+          for(var i = 0; i < humidityAndDateArr.length; i++) {
+            sum += parseFloat(humidityAndDateArr[i][0]);
+          }
+          return sum / humidityAndDateArr.length;
+        }
+    </script>
+</body>
+
+</html>
