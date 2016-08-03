@@ -38,6 +38,9 @@
     </div>
 
     <div class="panel panel-warning">
+      <div>
+        <button onclick = giveSuggestion();>Show Suggestion</button> <br />
+      </div>
         <div class="panel-heading">Suggestion</div>
         <div class="panel-body">
             <label id="suggestion"> </label>
@@ -94,7 +97,6 @@
             tempAndDateArr.push([temperature, tempTime]);
             updateHistory(temperature + ' ' + tempTime);
             currentTempLabel.text(temperature + '');
-            giveSuggestion();
         }
 
         function giveSuggestion() {
@@ -102,11 +104,11 @@
             if(Number.isNaN(averageTemperature))
               suggestionLabel.text('No information');
             else if (averageTemperature >= 30 && averageTemperature < 55) {
-                suggestionLabel.text('Average temperature: ' + averageTemperature + ' -Good');
+                suggestionLabel.text('Average temperature: ' + averageTemperature + '    /Good');
             } else if (averageTemperature < 50) {
-                suggestionLabel.text('Average temperature: ' + averageTemperature + ' -Low');
+                suggestionLabel.text('Average temperature: ' + averageTemperature + '    /Low');
             } else {
-                suggestionLabel.text('Average temperature: ' + averageTemperature + ' -High');
+                suggestionLabel.text('Average temperature: ' + averageTemperature + '    /High');
             }
         }
 

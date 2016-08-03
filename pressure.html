@@ -82,7 +82,7 @@
 
         function checkInput(input) {
             var inputArr = input.split(",");
-            if (inputArr[0] == '4') {
+            if (inputArr[0] == '3') {
                 recievepressure(inputArr[1]);
             }
         }
@@ -101,11 +101,11 @@
             if(Number.isNaN(averagePressure))
               suggestionLabel.text('No information');
             else if (averagePressure >= 30 && averagePressure < 55) {
-                suggestionLabel.text('Average air pressure: ' + averagePressure + '- Good');
+                suggestionLabel.text('Average air pressure: ' + averagePressure + '    /Good');
             } else if (averagePressure < 50) {
-                suggestionLabel.text('Average air pressure: ' + averagePressure + '- Low');
+                suggestionLabel.text('Average air pressure: ' + averagePressure + '    /Low');
             } else {
-                suggestionLabel.text('Average air pressure: ' + averagePressure + ' -High');
+                suggestionLabel.text('Average air pressure: ' + averagePressure + '    /High');
             }
         }
 

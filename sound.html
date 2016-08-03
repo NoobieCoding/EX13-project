@@ -30,6 +30,9 @@
     </div>
 
     <div class="panel panel-warning">
+      <div>
+        <button onclick = giveSuggestion();>Show Suggestion</button> <br />
+      </div>
         <div class="panel-heading">Suggestion</div>
         <div class="panel-body">
             <label id="suggestion"> </label>
@@ -83,7 +86,6 @@ function recieveSound(info) {
   soundAndDateArr.push([sound, soundTime]);
   updateHistory(sound + ' ' + soundTime);
   currentSoundLabel.text(sound + '') ;
-  giveSuggestion();
 }
 
 function giveSuggestion() {
@@ -91,11 +93,11 @@ function giveSuggestion() {
     if(Number.isNaN(averageSound))
       suggestionLabel.text('No information');
     else if (averageSound >= 30 && averageSound < 55) {
-        suggestionLabel.text('Average sound: ' + averageSound +' -Good') ;
+        suggestionLabel.text('Average sound: ' + averageSound +'    /Good') ;
     } else if (averageSound < 50) {
-        suggestionLabel.text('Average sound: ' + averageSound +' -Low') ;
+        suggestionLabel.text('Average sound: ' + averageSound +'    /Low') ;
     } else {
-        suggestionLabel.text('Average sound: ' + averageSound +' -High') ;
+        suggestionLabel.text('Average sound: ' + averageSound +'    /High') ;
     }
 }
 

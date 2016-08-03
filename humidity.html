@@ -93,8 +93,8 @@
             humidity = info;
             var humidityTime = date.toLocaleTimeString() + ' ' + date.toDateString();
             humidityAndDateArr.push([humidity, humidityTime]);
-            currentHumidityLabel.text(humidity + '') ;
-            updateHistory(humidity + ' ' + humidityTime);
+            currentHumidityLabel.text(humidity + '%') ;
+            updateHistory(humidity + '% ' + humidityTime);
         }
 
         function giveSuggestion() {
@@ -102,11 +102,11 @@
           if(Number.isNaN(averageHumidity))
             suggestionLabel.text('No information');
           else if (averageHumidity >= 30 && averageHumidity < 55) {
-            suggestionLabel.text('Average humidity: ' + averageHumidity + ' -Good');
+            suggestionLabel.text('Average humidity: ' + averageHumidity + '%' + '    /Good');
           } else if (averageHumidity < 50) {
-            suggestionLabel.text('Average humidity: ' + averageHumidity + ' -Low') ;
+            suggestionLabel.text('Average humidity: ' + averageHumidity + '%' + '    /Low') ;
           } else {
-            suggestionLabel.text('Average humidity: ' + averageHumidity + ' -High') ;
+            suggestionLabel.text('Average humidity: ' + averageHumidity + '%' + '    /High') ;
           }
         }
         function findAverage() {

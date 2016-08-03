@@ -52,6 +52,7 @@
   var currentGyroLabel = $("#currentGyro");
   var suggestionLabel = $("#suggestion");
   var lbl = '';
+  var timeHeadFlip = 0;
   var gyroAndDateArr = [];
 
   setInterval(function() {
@@ -70,56 +71,29 @@
   function checkInput(input) {
     var inputArr = input.split(",");
     if (inputArr[0] == 5)
-      recieveGyro(inputArr[1]);
+      recieveGyro();
   }
 
-  function recieveGyro(gyroData) {
-    var axisArr = gyroData.split("(");
+  function recieveGyro() {
+    timeHeadFlip += 1;
     date = new Date();
-    x = axisArr[0];
-    y = axisArr[1];
-    z = axisArr[2];
     var gyroTime = date.toLocaleTimeString() + ' ' + date.toDateString();
-    gyroAndDateArr.push([x, y, z, gyroTime]);
-    var gyroStr = 'x: ' + x + ' y: ' + y + ' z: ' + z;
+    gyroAndDateArr.push([timeHeadFlip, gyroTime]);
+    var gyroStr = timeHeadFlip + ' time(s)';
     currentGyroLabel.text(gyroStr) ;
     updateHistory(gyroStr + ' ' + gyroTime)
   }
 
   function giveSuggestion() {
-      var averageGyro = findAverage();
-      if(Number.isNaN(averageGyro))
+      if(Number.isNaN(timeHeadFlip))
         suggestionLabel.text('No information');
       else
         suggestionLabel.text('หัวกลิ้งหมุนๆ') ;
   }
 
-  function findAverage() {
-    var sumX = 0;
-    var sumY = 0;
-    var sumZ = 0;
-
-    for(var i = 0; i < gyroAndDateArr.length; i++) {
-      sumX += parseInt(gyroAndDateArr[i][0]);
-    }
-    var avrX = sumX / gyroAndDateArr.length;
-
-    for(var i = 0; i < gyroAndDateArr.length; i++) {
-      sumY += parseInt(gyroAndDateArr[i][1]);
-    }
-    var avrY = sumY / gyroAndDateArr.length;
-
-    for(var i = 0; i < gyroAndDateArr.length; i++) {
-      sumZ += parseInt(gyroAndDateArr[i][2]);
-    }
-    var avrZ = sumZ / gyroAndDateArr.length;
-
-    return [avrX, avrY, avrZ];
-  }
-
   function updateHistory(valuesAndDate) {
       var oldText= $('#history').val();
-      $('#history').html(oldText + '\n' + valuesAndDate);
+      $('#history').html(oldText + '\n total ' + valuesAndDate + 'time(s)');
   }
   </script
   </body>
