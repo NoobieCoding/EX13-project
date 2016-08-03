@@ -36,9 +36,19 @@
     </div>
 
     <div class="panel panel-warning">
+      <div>
+        <button onclick = giveSuggestion();>Show Suggestion</button> <br />
+      </div>
         <div class="panel-heading">Suggestion</div>
         <div class="panel-body">
             <label id="suggestion"> </label>
+        </div>
+    </div>
+
+    <div class="panel panel-danger">
+      <div class="panel-heading">History of info</div>
+        <div class="panel-body">
+          <textarea id="history"></textarea>
         </div>
     </div>
 
@@ -82,29 +92,36 @@
             date = new Date();
             var pressureTime = date.toLocaleTimeString() + ' ' + date.toDateString();
             pressureAndDateArr.push([pressure, pressureTime]);
+            updateHistory(pressure + ' ' + pressureTime);
             currentPressureLabel.text(pressure + '');
-            giveSuggestion();
         }
 
         function giveSuggestion() {
             var averagePressure = findAverage();
-            console.log(averagePressure);
-            if (pressure >= 30 && pressure < 55) {
-                suggestionLabel.text('good');
-            } else if (pressure < 50) {
-                suggestionLabel.text('Low');
+            if(Number.isNaN(averagePressure))
+              suggestionLabel.text('No information');
+            else if (averagePressure >= 30 && averagePressure < 55) {
+                suggestionLabel.text('Average air pressure: ' + averagePressure + '- Good');
+            } else if (averagePressure < 50) {
+                suggestionLabel.text('Average air pressure: ' + averagePressure + '- Low');
             } else {
-                suggestionLabel.text('High');
+                suggestionLabel.text('Average air pressure: ' + averagePressure + ' -High');
             }
         }
 
         function findAverage() {
           var sum = 0;
           for(var i = 0; i < pressureAndDateArr.length; i++) {
-            sum += parseInt(pressureAndDateArr[0][0]);
+            sum += parseInt(pressureAndDateArr[i][0]);
           }
           return sum / pressureAndDateArr.length;
         }
+
+        function updateHistory(valuesAndDate) {
+            var oldText= $('#history').val();
+            $('#history').html(oldText + '\n' + valuesAndDate);
+        }
+
     </script>
 </body>
 

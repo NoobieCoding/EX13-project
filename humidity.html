@@ -34,9 +34,19 @@
     </div>
 
     <div class="panel panel-warning">
+        <div>
+          <button onclick = giveSuggestion();>Show Suggestion</button> <br />
+        </div>
         <div class="panel-heading">Suggestion</div>
         <div class="panel-body">
             <label id="suggestion"> </label>
+        </div>
+    </div>
+
+    <div class="panel panel-danger">
+      <div class="panel-heading">History of info</div>
+        <div class="panel-body">
+          <textarea id="history"></textarea>
         </div>
     </div>
 
@@ -84,19 +94,19 @@
             var humidityTime = date.toLocaleTimeString() + ' ' + date.toDateString();
             humidityAndDateArr.push([humidity, humidityTime]);
             currentHumidityLabel.text(humidity + '') ;
-            currentHumidityLabel.text(humidity + '') ;
-            giveSuggestion() ;
+            updateHistory(humidity + ' ' + humidityTime);
         }
 
         function giveSuggestion() {
           var averageHumidity = findAverage();
-        //  console.log(averageHumidity);
-          if (humidity >= 30 && humidity < 55) {
-            suggestionLabel.text('good') ;
-          } else if (humidity < 50) {
-            suggestionLabel.text('Low') ;
+          if(Number.isNaN(averageHumidity))
+            suggestionLabel.text('No information');
+          else if (averageHumidity >= 30 && averageHumidity < 55) {
+            suggestionLabel.text('Average humidity: ' + averageHumidity + ' -Good');
+          } else if (averageHumidity < 50) {
+            suggestionLabel.text('Average humidity: ' + averageHumidity + ' -Low') ;
           } else {
-            suggestionLabel.text('High') ;
+            suggestionLabel.text('Average humidity: ' + averageHumidity + ' -High') ;
           }
         }
         function findAverage() {
@@ -105,6 +115,11 @@
             sum += parseFloat(humidityAndDateArr[i][0]);
           }
           return sum / humidityAndDateArr.length;
+        }
+
+        function updateHistory(valuesAndDate) {
+            var oldText= $('#history').val();
+            $('#history').html(oldText + '\n' + valuesAndDate);
         }
     </script>
 </body>

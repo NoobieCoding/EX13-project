@@ -35,6 +35,14 @@
             <label id="suggestion"> </label>
         </div>
     </div>
+
+    <div class="panel panel-danger">
+      <div class="panel-heading">History of info</div>
+        <div class="panel-body">
+          <textarea id="history"></textarea>
+        </div>
+    </div>
+
   <script type="text/javascript">
     var currentMessage = '';
     var currentSoundLabel = $("#currentSound");
@@ -64,7 +72,7 @@
 
 function checkInput(input) {
   var inputArr = input.split(",");
-  if (inputArr[0] == 5)
+  if (inputArr[0] == 4)
     recieveSound(inputArr[1]);
 }
 
@@ -73,29 +81,37 @@ function recieveSound(info) {
   date = new Date();
   var soundTime = date.toLocaleTimeString() + ' ' + date.toDateString();
   soundAndDateArr.push([sound, soundTime]);
+  updateHistory(sound + ' ' + soundTime);
   currentSoundLabel.text(sound + '') ;
   giveSuggestion();
 }
 
 function giveSuggestion() {
     var averageSound = findAverage();
-    console.log(averageSound);
-    if (averageSound >= 30 && averageSound < 55) {
-        suggestionLabel.text('good') ;
+    if(Number.isNaN(averageSound))
+      suggestionLabel.text('No information');
+    else if (averageSound >= 30 && averageSound < 55) {
+        suggestionLabel.text('Average sound: ' + averageSound +' -Good') ;
     } else if (averageSound < 50) {
-        suggestionLabel.text('Low') ;
+        suggestionLabel.text('Average sound: ' + averageSound +' -Low') ;
     } else {
-        suggestionLabel.text('High') ;
+        suggestionLabel.text('Average sound: ' + averageSound +' -High') ;
     }
 }
 
   function findAverage() {
     var sum = 0;
     for(var i = 0; i < soundAndDateArr.length; i++) {
-      sum += parseInt(soundAndDateArr[0][0]);
+      sum += parseInt(soundAndDateArr[i][0]);
     }
     return sum / soundAndDateArr.length;
   }
+
+  function updateHistory(valuesAndDate) {
+      var oldText= $('#history').val();
+      $('#history').html(oldText + '\n' + valuesAndDate);
+  }
+
   </script
   </body>
 </html>

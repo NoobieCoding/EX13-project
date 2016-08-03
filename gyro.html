@@ -31,11 +31,22 @@
     </div>
 
     <div class="panel panel-warning">
+      <div>
+        <button onclick = giveSuggestion();>Show Suggestion</button> <br />
+      </div>
         <div class="panel-heading">Suggestion</div>
         <div class="panel-body">
             <label id="suggestion"> </label>
         </div>
     </div>
+
+    <div class="panel panel-danger">
+      <div class="panel-heading">History of info</div>
+        <div class="panel-body">
+          <textarea id="history"></textarea>
+        </div>
+    </div>
+
   <script type="text/javascript">
   var currentMessage = '';
   var currentGyroLabel = $("#currentGyro");
@@ -58,25 +69,29 @@
 
   function checkInput(input) {
     var inputArr = input.split(",");
-    if (inputArr[0] == 6)
+    if (inputArr[0] == 5)
       recieveGyro(inputArr[1]);
-      giveSuggestion();
   }
 
   function recieveGyro(gyroData) {
     var axisArr = gyroData.split("(");
-    var x = axisArr[0];
-    var y = axisArr[1];
-    var z = axisArr[2];
+    date = new Date();
+    x = axisArr[0];
+    y = axisArr[1];
+    z = axisArr[2];
     var gyroTime = date.toLocaleTimeString() + ' ' + date.toDateString();
     gyroAndDateArr.push([x, y, z, gyroTime]);
-    currentGyroLabel.text('x: ' + x + '\n y: ' + y + '\n z: ' + z) ;
-    giveSuggestion(x, y, z);
+    var gyroStr = 'x: ' + x + ' y: ' + y + ' z: ' + z;
+    currentGyroLabel.text(gyroStr) ;
+    updateHistory(gyroStr + ' ' + gyroTime)
   }
 
-  function giveSuggestion(x, y, z) {
+  function giveSuggestion() {
       var averageGyro = findAverage();
-      suggestionLabel.text('หัวกลิ้งหมุนๆ') ;
+      if(Number.isNaN(averageGyro))
+        suggestionLabel.text('No information');
+      else
+        suggestionLabel.text('หัวกลิ้งหมุนๆ') ;
   }
 
   function findAverage() {
@@ -85,21 +100,26 @@
     var sumZ = 0;
 
     for(var i = 0; i < gyroAndDateArr.length; i++) {
-      sumX += parseInt(gyroAndDateArr[0][0]);
+      sumX += parseInt(gyroAndDateArr[i][0]);
     }
     var avrX = sumX / gyroAndDateArr.length;
 
     for(var i = 0; i < gyroAndDateArr.length; i++) {
-      sumY += parseInt(gyroAndDateArr[0][1]);
+      sumY += parseInt(gyroAndDateArr[i][1]);
     }
     var avrY = sumY / gyroAndDateArr.length;
 
     for(var i = 0; i < gyroAndDateArr.length; i++) {
-      sumZ += parseInt(gyroAndDateArr[0][2]);
+      sumZ += parseInt(gyroAndDateArr[i][2]);
     }
     var avrZ = sumZ / gyroAndDateArr.length;
 
     return [avrX, avrY, avrZ];
+  }
+
+  function updateHistory(valuesAndDate) {
+      var oldText= $('#history').val();
+      $('#history').html(oldText + '\n' + valuesAndDate);
   }
   </script
   </body>

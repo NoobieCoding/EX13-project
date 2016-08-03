@@ -47,9 +47,7 @@
     <div class="panel panel-danger">
           <div class="panel-heading">History of info</div>
           <div class="panel-body">
-            <p>
-              This is where you paste your data.
-            </p>
+            <textarea id="history"></textarea>
           </div>
       </div>
 
@@ -94,28 +92,35 @@
             date = new Date();
             var tempTime = date.toLocaleTimeString() + ' ' + date.toDateString();
             tempAndDateArr.push([temperature, tempTime]);
+            updateHistory(temperature + ' ' + tempTime);
             currentTempLabel.text(temperature + '');
             giveSuggestion();
         }
 
         function giveSuggestion() {
-            var averagetemp = findAverage();
-            console.log(averageTemp);
-            if (temperature >= 30 && temperature < 55) {
-                suggestionLabel.text('good');
-            } else if (temperature < 50) {
-                suggestionLabel.text('low');
+            var averageTemperature = findAverage();
+            if(Number.isNaN(averageTemperature))
+              suggestionLabel.text('No information');
+            else if (averageTemperature >= 30 && averageTemperature < 55) {
+                suggestionLabel.text('Average temperature: ' + averageTemperature + ' -Good');
+            } else if (averageTemperature < 50) {
+                suggestionLabel.text('Average temperature: ' + averageTemperature + ' -Low');
             } else {
-                suggestionLabel.text('High');
+                suggestionLabel.text('Average temperature: ' + averageTemperature + ' -High');
             }
         }
 
         function findAverage() {
           var sum = 0;
           for(var i = 0; i < tempAndDateArr.length; i++) {
-            sum += parseInt(tempAndDateArr[0][0]);
+            sum += parseInt(tempAndDateArr[i][0]);
           }
           return sum / tempAndDateArr.length;
+        }
+
+        function updateHistory(valuesAndDate) {
+            var oldText= $('#history').val();
+            $('#history').html(oldText + '\n' + valuesAndDate);
         }
     </script>
 </body>
