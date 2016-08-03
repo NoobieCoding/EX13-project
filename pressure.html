@@ -92,8 +92,8 @@
             date = new Date();
             var pressureTime = date.toLocaleTimeString() + ' ' + date.toDateString();
             pressureAndDateArr.push([pressure, pressureTime]);
-            updateHistory(pressure + ' ' + pressureTime);
-            currentPressureLabel.text(pressure + '');
+            updateHistory(pressure + ' pa ' + pressureTime);
+            currentPressureLabel.text(pressure + ' Pa');
         }
 
         function giveSuggestion() {
@@ -101,11 +101,11 @@
             if(Number.isNaN(averagePressure))
               suggestionLabel.text('No information');
             else if (averagePressure >= 30 && averagePressure < 55) {
-                suggestionLabel.text('Average air pressure: ' + averagePressure + '    /Good');
+                suggestionLabel.text('Average air pressure: ' + averagePressure + ' Pa' + '    /Good');
             } else if (averagePressure < 50) {
-                suggestionLabel.text('Average air pressure: ' + averagePressure + '    /Low');
+                suggestionLabel.text('Average air pressure: ' + averagePressure + ' Pa' + '    /Low');
             } else {
-                suggestionLabel.text('Average air pressure: ' + averagePressure + '    /High');
+                suggestionLabel.text('Average air pressure: ' + averagePressure + ' Pa' + '    /High');
             }
         }
 

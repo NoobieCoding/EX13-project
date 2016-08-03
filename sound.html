@@ -23,7 +23,7 @@
 
 
     <div class="panel panel-info">
-        <div class="panel-heading">What is Sound?</div>
+        <div class="panel-heading">What is Sound level?</div>
         <div class="panel-body">
           xxxxxxxxxx
         </div>
@@ -84,8 +84,8 @@ function recieveSound(info) {
   date = new Date();
   var soundTime = date.toLocaleTimeString() + ' ' + date.toDateString();
   soundAndDateArr.push([sound, soundTime]);
-  updateHistory(sound + ' ' + soundTime);
-  currentSoundLabel.text(sound + '') ;
+  updateHistory(sound + 'dB ' + soundTime);
+  currentSoundLabel.text(sound + ' dB') ;
 }
 
 function giveSuggestion() {
@@ -93,11 +93,11 @@ function giveSuggestion() {
     if(Number.isNaN(averageSound))
       suggestionLabel.text('No information');
     else if (averageSound >= 30 && averageSound < 55) {
-        suggestionLabel.text('Average sound: ' + averageSound +'    /Good') ;
+        suggestionLabel.text('Average sound level: ' + averageSound + ' dB' + '    /Good') ;
     } else if (averageSound < 50) {
-        suggestionLabel.text('Average sound: ' + averageSound +'    /Low') ;
+        suggestionLabel.text('Average sound level: ' + averageSound + ' dB' + '    /Low') ;
     } else {
-        suggestionLabel.text('Average sound: ' + averageSound +'    /High') ;
+        suggestionLabel.text('Average sound level: ' + averageSound + ' dB' + '    /High') ;
     }
 }
 

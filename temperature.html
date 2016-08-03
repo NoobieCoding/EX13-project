@@ -95,8 +95,8 @@
             date = new Date();
             var tempTime = date.toLocaleTimeString() + ' ' + date.toDateString();
             tempAndDateArr.push([temperature, tempTime]);
-            updateHistory(temperature + ' ' + tempTime);
-            currentTempLabel.text(temperature + '');
+            updateHistory(temperature + '°C ' + tempTime);
+            currentTempLabel.text(temperature + ' °C');
         }
 
         function giveSuggestion() {
@@ -104,11 +104,11 @@
             if(Number.isNaN(averageTemperature))
               suggestionLabel.text('No information');
             else if (averageTemperature >= 30 && averageTemperature < 55) {
-                suggestionLabel.text('Average temperature: ' + averageTemperature + '    /Good');
+                suggestionLabel.text('Average temperature: ' + averageTemperature + ' °C' + '    /Good');
             } else if (averageTemperature < 50) {
-                suggestionLabel.text('Average temperature: ' + averageTemperature + '    /Low');
+                suggestionLabel.text('Average temperature: ' + averageTemperature + ' °C' + '    /Low');
             } else {
-                suggestionLabel.text('Average temperature: ' + averageTemperature + '    /High');
+                suggestionLabel.text('Average temperature: ' + averageTemperature + ' °C' + '    /High');
             }
         }
 
