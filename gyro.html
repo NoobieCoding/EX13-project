@@ -9,15 +9,15 @@
   <body>
     <textarea id="test"></textarea>
     <br />
-    <label id="text">This is Huminity Page</label>
+    <label id="text">This is Gyro Page</label>
     <br />
     <br />
 
     <div class="panel panel-success">
-        <div class="panel-heading">Your current Humidity</div>
+        <div class="panel-heading">Your current หมุนๆ</div>
         <div class="panel-body">
             <br />
-            <label id="currentHuminity"> </label>
+            <label id="currentGyro"> </label>
             <br />
             <br />
         </div>
@@ -38,6 +38,10 @@
     </div>
   <script type="text/javascript">
   var currentMessage = '';
+  var currentGyroLabel = $("#currentGyro");
+  var suggestionLabel = $("#suggestion");
+  var lbl = '';
+
   setInterval(function() {
     $.ajax({
       url: 'http://10.32.176.4/HP'
@@ -46,24 +50,30 @@
       if (data !== currentMessage) {
         console.log(data)
         checkInput(data);
-       currentMessage = data;
+        currentMessage = data;
       }
     })
   }, 1000);
 
-function checkInput(input) {
-  var inputArr = input.split(",");
-  if (inputArr[0] == 6)
-    recieveGyro(inputArr[1]);
-}
+  function checkInput(input) {
+    var inputArr = input.split(",");
+    if (inputArr[0] == 6)
+      recieveGyro(inputArr[1]);
+      giveSuggestion();
+  }
 
-function recieveGyro(gyroData) {
-  var axisArr = gyroData.split(" ");
-  var x = axisArr[0];
-  var y = axisArr[1];
-  var z = axisArr[3];
-  alert(x);
-}
+  function recieveGyro(gyroData) {
+    var axisArr = gyroData.split("(");
+    var x = axisArr[0];
+    var y = axisArr[1];
+    var z = axisArr[2];
+    currentGyroLabel.text('x: ' + x + '\n y: ' + y + '\n z: ' + z) ;
+    giveSuggestion(x, y, z);
+  }
+
+  function giveSuggestion(x, y, z) {
+      suggestionLabel.text('หัวกลิ้งหมุนๆ') ;
+  }
   </script
   </body>
 </html>
