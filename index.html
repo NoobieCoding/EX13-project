@@ -42,13 +42,14 @@
         <input id="hourField" />
         <input id="minuteField" />
         <input id="secondField" />
-        <button id="setTimeB">Submit</button>
+        <button id="setTimeB">Submit</button> <br />
+        <button id="recommendBtn" onclick= setRecommendTime();>Recommend time</button>
       </div>
       <div> <br /><br /><br /><br />
         <button id="cancelAlarm">Cancel alarm</button>
       </div>
       <div id="end-part">
-        <img src="images/logo.png" />
+        <img src="images/logo team.png" />
       </div>
     </div>
     <script type="text/javascript">
@@ -148,32 +149,16 @@ console.log("Click");
           });
       }
 
-      var currentMessage = '';
-      setInterval(function() {
-        $.ajax({
-          url: 'http://10.32.176.4/HP'
-        })
-        .done(function(data) {
-          if (data !== currentMessage) {
-            checkInput(data);
-            console.log('success');
-           currentMessage = data;
-          }
-        })
-      }, 1000);
-
-    function checkInput(input) {
-      var inputArr = input.split(",");
-      if (inputArr[0] == 1)
-        recieveTime(inputArr[1]);
+    function setRecommendTime() {
+      hour = 7;
+      minute = 0;
+      second = 0;
+      alarmHour.text(hour + '');
+      alarmMinute.text(minute + '');
+      alarmSecond.text(second + '');
+      sendAwakeTime(hour + ':' + minute + ':' + second);
     }
 
-    function recieveTime(timeInSecond) {
-      var date = new Date(null);
-      date.setSeconds(timeInSecond);
-      var sleepTime = date.toISOString().substr(11, 8);
-      alert(sleepTime);
-    }
     </script>
   </body>
 </html>

@@ -103,9 +103,9 @@
             var averageTemperature = findAverage();
             if(Number.isNaN(averageTemperature))
               suggestionLabel.text('No information');
-            else if (averageTemperature >= 30 && averageTemperature < 55) {
+            else if (averageTemperature >= 19 && averageTemperature <= 25) {
                 suggestionLabel.text('Average temperature: ' + averageTemperature + ' °C' + '    /Good');
-            } else if (averageTemperature < 50) {
+            } else if (averageTemperature < 19) {
                 suggestionLabel.text('Average temperature: ' + averageTemperature + ' °C' + '    /Low');
             } else {
                 suggestionLabel.text('Average temperature: ' + averageTemperature + ' °C' + '    /High');

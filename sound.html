@@ -92,9 +92,9 @@ function giveSuggestion() {
     var averageSound = findAverage();
     if(Number.isNaN(averageSound))
       suggestionLabel.text('No information');
-    else if (averageSound >= 30 && averageSound < 55) {
+    else if (averageSound >= 30 && averageSound < 45) {
         suggestionLabel.text('Average sound level: ' + averageSound + ' dB' + '    /Good') ;
-    } else if (averageSound < 50) {
+    } else if (averageSound < 30) {
         suggestionLabel.text('Average sound level: ' + averageSound + ' dB' + '    /Low') ;
     } else {
         suggestionLabel.text('Average sound level: ' + averageSound + ' dB' + '    /High') ;
