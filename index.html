@@ -62,30 +62,43 @@
     });
 
     $("#setTimeB").click(function() {
+console.log("Click");
 
       hour = parseInt($("#hourField").val());
         if($("#hourField").val() === "") {
           hour = 26;
         }
-        if (hour >= 0 && hour < 24)
+        if (hour >= 0 && hour < 24) {
+          alarmHour.css('color', 'black');
           alarmHour.text(hour + '');
+        }
         else{
+           alarmHour.css('color', 'red');
            alarmHour.text('Invalid input');
         }
+      $("#hourField").val("");
 
       minute = parseInt($("#minuteField").val());
-        if (minute >= 0 && minute < 60)
+        if (minute >= 0 && minute < 60) {
+         alarmMinute.css('color', 'black');
          alarmMinute.text(minute + '');
+        }
         else {
+          alarmMinute.css('color', 'red');
           alarmMinute.text('Invalid input');
         }
+      $("#minuteField").val("");
 
       second = parseInt($("#secondField").val());
-        if (second >= 0 && second < 60)
+        if (second >= 0 && second < 60) {
+          alarmSecond.css('color', 'black');
           alarmSecond.text(second + '');
+        }
         else {
+          alarmSecond.css('color', 'red');
           alarmSecond.text('Invalid input');
         }
+        $("#secondField").val("");
 
         sendAwakeTime(hour + ':' + minute + ':' + second);
     });
@@ -97,6 +110,9 @@
       alarmHour.text('Hour');
       alarmMinute.text('Minute');
       alarmSecond.text('second');
+      alarmHour.css('color', 'black');
+      alarmMinute.css('color', 'black');
+      alarmSecond.css('color', 'black');
       sendData('Cancel');
     });
 
@@ -114,7 +130,6 @@
     }
 
     function sendAwakeTime(time){
-      console.log(time);
       sendData(time);
     }
 
