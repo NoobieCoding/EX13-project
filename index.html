@@ -41,6 +41,9 @@
         <input id="secondField" />
         <button id="setTimeB">Submit</button>
       </div>
+      <div> <br /><br /><br /><br />
+        <button id="cancelAlarm">Cancel alarm</button>
+      </div>
       <div id="end-part">
         <img src="images/logo.png" />
       </div>
@@ -49,6 +52,7 @@
       var alarmHour = $("#alarmHour");
       var alarmMinute = $("#alarmMinute");
       var alarmSecond = $("#alarmSecond");
+      var cancelAlarm = $("#cancelAlarm");
       var hour = 25;
       var minute = 61;
       var second = 61;
@@ -67,21 +71,33 @@
           alarmHour.text(hour + '');
         else{
            alarmHour.text('Invalid input');
-  }
+        }
 
       minute = parseInt($("#minuteField").val());
         if (minute >= 0 && minute < 60)
          alarmMinute.text(minute + '');
         else {
           alarmMinute.text('Invalid input');
-  }
+        }
 
       second = parseInt($("#secondField").val());
         if (second >= 0 && second < 60)
           alarmSecond.text(second + '');
         else {
-           alarmSecond.text('Invalid input');
-  }
+          alarmSecond.text('Invalid input');
+        }
+
+        sendAwakeTime(hour + ':' + minute + ':' + second);
+    });
+
+    cancelAlarm.click(function() {
+      hour = 25;
+      minute = 61;
+      second = 61;
+      alarmHour.text('Hour');
+      alarmMinute.text('Minute');
+      alarmSecond.text('second');
+      sendData('Cancel');
     });
 
     setInterval(function() {
@@ -93,13 +109,25 @@
       var currHour = date.getHours();
       var currMinute = date.getMinutes();
       var currSecond = date.getSeconds();
-      console.log(currSecond);
       if (hour === currHour && minute === currMinute && second === currSecond)
-        alarm();
-      }
+        sendData('Wake');
+    }
 
-      function alarm() {
-        console.log('Wake up!');
+    function sendAwakeTime(time){
+      console.log(time);
+      sendData(time);
+    }
+
+      function sendData(data) {
+          $.ajax({
+              url: 'http://10.32.176.4/HP/' + data,
+              success: function(data) {
+              console.log('success');
+              },
+              error: function(err) {
+                  console.log(err);
+              }
+          });
       }
     </script>
   </body>
